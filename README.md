@@ -1,2 +1,1 @@
-# dicegame
-A repository for Dice 10000 game with Bubbletea TUI
+This repository is empty. Any task executed on it should be considered a new capability and needs to be created.
