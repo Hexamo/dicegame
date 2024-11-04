@@ -1,11 +1,10 @@
-from game.dice import Dice
+from game.dice import roll_dice
 from game.rules import Rules
 from game.user_interaction import UserInteraction
 
 class DiceGame:
     def __init__(self, console):
         self.console = console
-        self.dice = Dice()
         self.rules = Rules()
         self.ui = UserInteraction(console)
         self.score = 0
@@ -16,7 +15,7 @@ class DiceGame:
         self.ui.display_panel("Current Score", f"[bold green]{self.score}[/bold green]")
 
     def roll_dice(self, num_dice):
-        return [self.dice.roll() for _ in range(num_dice)]
+        return [roll_dice() for _ in range(num_dice)]
 
     def display_dice(self, roll_results):
         dice_str = ""
