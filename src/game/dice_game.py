@@ -54,15 +54,14 @@ class DiceGame:
             self.round_score += 1000
             self.ui.display_panel("Round Score", f"[bold blue]{self.round_score}[/bold blue]")
             self.display_score()
-            self.score += self.round_score
-            return True
+            return False  # Continue the current round
         elif special_roll == "straight":
             self.ui.display_message("[bold green]You rolled a straight![/bold green]")
             self.round_score += 1500
             self.ui.display_panel("Round Score", f"[bold blue]{self.round_score}[/bold blue]")
             self.display_score()
             self.score += self.round_score
-            return True
+            return False  # End the current round
         return False
 
     def handle_no_scoring_dice(self, roll_results):

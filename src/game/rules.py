@@ -55,11 +55,11 @@ class Rules:
         for num, count in counts.items():
             if count >= 3:
                 if num == 1:
-                    score += 1000  # Three 1s are worth 1000 points
+                    score += 1000 * (2 ** (count - 3))  # Three 1s are worth 1000 points, doubled for each additional 1
                 else:
-                    score += num * 100  # Three of any other number is worth 100 times the number
+                    score += num * 100 * (2 ** (count - 3))  # Three of any other number is worth 100 times the number, doubled for each additional die
 
-                counts[num] -= 3  # Remove the counted dice
+                counts[num] -= count  # Remove the counted dice
 
         # Scoring for remaining 1s and 5s
         score += counts[1] * self.score_rules[1]
