@@ -76,6 +76,29 @@ class Rules:
 
         return score
 
+    def check_special_rolls(self, roll_results):
+        counts = {i: roll_results.count(i) for i in range(1, 7)}
+
+        # Check if the roll results in three pairs
+        if len([num for num, count in counts.items() if count == 2]) == 3:
+            return "three_pairs"
+
+        # Check if the roll results in a straight (1 through 6)
+        if all(counts[i] == 1 for i in range(1, 7)):
+            return "straight"
+
+        return None
+
     def is_valid_move(self, dice_rolls):
         # Implement logic to check if the move is valid based on the game rules
         return True  # Placeholder for actual validation logic
+
+    def handle_no_scoring_dice(self, roll_results):
+        if not any(d in [1, 5] or roll_results.count(d) >= 3 for d in roll_results):
+            return True
+        return False
+
+    def handle_pair_roll(self, roll_results):
+        if len(roll_results) == 2 and roll_results[0] == roll_results[1]:
+            return True
+        return False

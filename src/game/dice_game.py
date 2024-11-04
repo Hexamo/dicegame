@@ -48,38 +48,32 @@ class DiceGame:
                 self.ui.display_message("[bold red]Invalid input! Please enter valid dice values.[/bold red]")
 
     def check_special_rolls(self, roll_results):
-        counts = {i: roll_results.count(i) for i in range(1, 7)}
-
-        # Check if the roll results in three pairs
-        pairs = [num for num, count in counts.items() if count == 2]
-        if len(pairs) == 3:
+        special_roll = self.rules.check_special_rolls(roll_results)
+        if special_roll == "three_pairs":
             self.ui.display_message("[bold green]You rolled three pairs![/bold green]")
             self.round_score += 1000
             self.ui.display_panel("Round Score", f"[bold blue]{self.round_score}[/bold blue]")
             self.display_score()
             self.score += self.round_score
             return True
-
-        # Check if the roll results in a straight (1 through 6)
-        if all(counts[i] == 1 for i in range(1, 7)):
+        elif special_roll == "straight":
             self.ui.display_message("[bold green]You rolled a straight![/bold green]")
             self.round_score += 1500
             self.ui.display_panel("Round Score", f"[bold blue]{self.round_score}[/bold blue]")
             self.display_score()
             self.score += self.round_score
             return True
-
         return False
 
     def handle_no_scoring_dice(self, roll_results):
-        if not any(d in [1, 5] or roll_results.count(d) >= 3 for d in roll_results):
+        if self.rules.handle_no_scoring_dice(roll_results):
             self.ui.display_message("[bold red]No scoring dice! Round over, no points scored.[/bold red]")
             self.round_score = 0
             return True
         return False
 
     def handle_pair_roll(self, roll_results):
-        if len(roll_results) == 2 and roll_results[0] == roll_results[1]:
+        if self.rules.handle_pair_roll(roll_results):
             self.ui.display_message("[bold red]You rolled a pair! Round over, no points scored.[/bold red]")
             self.round_score = 0
             return True
